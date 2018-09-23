@@ -33,6 +33,9 @@ export default {
   created: function(){
     this.fetchImages();
   },
+  mounted: function(){
+    this.hideModalListener();
+  },
   methods: {
     fetchImages: function(){
       let self = this;
@@ -44,9 +47,16 @@ export default {
     },
     openImageEditor: function(image) {
       this.currentImage = image;
+    },
+    hideModalListener: function() {
+      let self = this;
+      document.onclick = function(e){
+        if(e.target.className == 'modal'){
+          self.currentImage = null;
+        }
+      };
     }
-  },
-
+  }
 }
 </script>
 

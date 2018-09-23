@@ -1,24 +1,19 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <div class="grid-cell fixed">
-        <figure v-bind:class="customStyle">
-          <img :src="image.urls.regular">
+      <figure v-bind:class="customStyle">
+        <img :src="image.urls.regular" class="main-img">
+      </figure>
+      <div class="flex-container">
+        <figure :class="style.name" v-for="style in styles" @click="filterImage(style)">
+          <img :src="image.urls.thumb">
         </figure>
-      </div>
-      <div class="grid-cell filter-list">
-        <div class="filter-item" v-for="style in styles" @click="filterImage(style)">
-          <figure :class="style.name">
-            <img :src="image.urls.thumb">
-          </figure>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   components: {
   },
@@ -30,7 +25,7 @@ export default {
   },
   data: function(){
     return {
-      customStyle: "normal"
+      customStyle: "normal",
     }
   },
   created: function(){
@@ -61,13 +56,12 @@ export default {
   methods: {
     filterImage: function(style){
       this.customStyle = style.name;
-    }
+    },
   }
 }
 </script>
 
 <style>
-
 .modal {
     display: block; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -88,7 +82,6 @@ export default {
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
-    display: flex;
 }
 
 /* The Close Button */
@@ -106,31 +99,43 @@ export default {
     cursor: pointer;
 }
 
-.fixed {
-  width: 80%;
-}
-
-.filter-list {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow: scroll;
-  max-height: 1000px;
-}
-
-.grid-cell {
-  margin: 5px;
-  padding: 0px;
-  line-height: 1;
-}
-
-img {
+.main-img {
   width: 100%;
   height: auto;
 }
 
-.filter-item {
-  cursor: pointer;
-  margin: 1px;
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.flex-container figure {
+  margin: auto;
+  flex: 0 0 auto;
+}
+
+.flex-container::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.flex-container::-webkit-scrollbar
+{
+  width: 5px;
+  background-color: #F5F5F5;
+}
+
+.flex-container::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+}
+
+figure img {
+  width: 100%;
 }
 </style>
